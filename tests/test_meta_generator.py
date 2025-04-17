@@ -60,7 +60,6 @@ def test_soundtrap_generator_s3():
         uri="s3://pacific-sound-ch01",
         json_base_dir=json_dir.as_posix(),
         prefixes=["7000"],
-        xml_dir="s3://pacific-sound-ch01",
         start=start,
         end=end,
     )
@@ -118,13 +117,12 @@ def test_soundtrap_generator_local():
         uri=f"file://{wav_dir.as_posix()}",
         json_base_dir=json_dir.as_posix(),
         prefixes=["6716"],
-        xml_dir=wav_dir.as_posix(),
         start=start,
         end=end,
     )
     gen.run()
 
-    # There should be two files in the json directory - one for each day
+    # There should be one file in the json directory - one for each day
     json_files = list(json_dir.rglob("*.json"))
     assert len(json_files) == 1
     assert (json_dir / "2022" / "20221116.json").exists()

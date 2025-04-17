@@ -6,6 +6,8 @@ from typing import List
 
 import pandas as pd
 
+from pbp.meta_gen.utils import check_start_end_args
+
 
 class MetadataGeneratorAbstract(object):
     def __init__(
@@ -36,6 +38,7 @@ class MetadataGeneratorAbstract(object):
         :return:
         """
         try:
+            start, end = check_start_end_args(start, end)
             self.audio_loc = audio_loc
             self.json_base_dir = json_base_dir
             self.df = pd.DataFrame()
@@ -67,7 +70,6 @@ class SoundTrapMetadataGeneratorAbstract(object):
         audio_loc: str,
         json_base_dir: str,
         prefixes: List[str],
-        xml_dir: str,
         start: datetime,
         end: datetime,
         seconds_per_file: float = 0.0,
@@ -81,8 +83,6 @@ class SoundTrapMetadataGeneratorAbstract(object):
             The local directory to write the json files to
         :param prefixes:
             The search patterns to match the wav files, e.g. 'MARS'
-        :param xml_dir
-            The local directory that contains the log.xml files, defaults to audio_loc if none is specified.
         :param start:
             The start date to search for wav files
         :param end:
@@ -92,13 +92,13 @@ class SoundTrapMetadataGeneratorAbstract(object):
         :return:
         """
         try:
+            start, end = check_start_end_args(start, end)
             self.audio_loc = audio_loc
             self.json_base_dir = json_base_dir
             self.df = pd.DataFrame()
             self.start = start
             self.end = end
             self.prefixes = prefixes
-            self.xml_dir = xml_dir
             self._log = log
             self._seconds_per_file = None if seconds_per_file == 0 else seconds_per_file
         except Exception as e:

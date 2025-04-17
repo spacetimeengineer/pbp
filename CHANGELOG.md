@@ -1,5 +1,46 @@
 # PBP – PyPAM based processing
 
+2025-04
+
+- 1.7.1: Fixes [#55](https://github.com/mbari-org/pbp/issues/55).
+  Thanks, @cparcerisas!
+  
+- 1.7.0: Bumped PyPAM to 0.3.2 from 0.3.0.
+  A needed adjustment was to set pvlib to "^0.11.0"
+
+- 1.6.4: 
+  Get metadata from the wav headers instead of the xml files that are accompanied by soundtrap recordings
+  ([PR #74](https://github.com/mbari-org/pbp/pull/74)).
+  Thanks to @cparcerisas, @bram-cuyx for the contribution!
+  
+2025-03
+
+- Resolve #37 "Add pre-commit"
+    - with only ruff formatting and mypy check
+    - TODO test it.
+    - NOTE: CI continues to perform the checks as before.
+
+- As we add to the API documentation, `"always_generate": true` has been set in `.mbaridoc.json`
+  to ensure any updates in python scripts get reflected in the generated doc site.
+
+- 1.6.2:
+    - A quality flag variable (with value fixed to 2 - "Not Evaluated")
+      can now be added to the NetCDF file.
+        - CLI:
+            - Use the `--add-quality-flag` option when calling `pbp-hmb-gen`
+        - API:
+            - If using `ProcessHelper`, pass `add_quality_flag=True` in the construction of the instance
+            - If using `HmbGen`, call `set_add_quality_flag(True)` on the instance
+
+- 1.6.1:
+    - The generated NetCDF file is now compressed by default.
+      This can be disabled as follows:
+        - CLI: 
+            - Use the `--no-netcdf-compression` option when calling `pbp-hmb-gen`
+        - API:
+            - If using `ProcessHelper`, pass `compress_netcdf=False` in the construction of the instance
+            - If using `HmbGen`, call `set_compress_netcdf(False)` on the instance.
+
 2024-12
 
 - The setup and sources for the end-user documentation site has been incorporated in this repo.
